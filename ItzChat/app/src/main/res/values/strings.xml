@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ItzChat</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="log_out">Log Out</string>
+    <string name="bneed_account">Need An Account?</string>
+    <string name="login_password">Password</string>
+    <string name="login_txt">Already have account</string>
+</resources>
