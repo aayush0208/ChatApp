@@ -18,7 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
-    private Toolbar register_toolbar;
+    private Toolbar login_toolbar;
     private Button blogin;
     private TextInputLayout log_email;
     private TextInputLayout log_password;
@@ -30,8 +30,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         //toolbar
-        register_toolbar=(Toolbar)findViewById(R.id.register_app_bar);
-        setSupportActionBar(register_toolbar);
+        login_toolbar=(Toolbar)findViewById(R.id.login_app_bar);
+        setSupportActionBar(login_toolbar);
         getSupportActionBar().setTitle("Log In");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -78,7 +78,8 @@ public class LoginActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             logprogressDialog.dismiss();
 
-                            Intent startintent = new Intent(LoginActivity.this,StartActivity.class);
+                            Intent startintent = new Intent(LoginActivity.this,MainActivity.class);
+                            startintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(startintent);
                             finish();
                         }

@@ -12,11 +12,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout reg_name, reg_email, reg_password;
@@ -25,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Toolbar register_toolbar;
     //progress bar
     private ProgressDialog reg_progressdialog;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,16 +71,35 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 //Get the user name ,email and password to create a database
-    private void register_user(String name, String email, String password) {
+    private void register_user(final String name, String email, String password) {
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    reg_progressdialog.dismiss();
-                    Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
-                    startActivity(mainIntent);
-                    finish();
+
+                    FirebaseUser current_user=FirebaseAuth.getInstance().getCurrentUser();
+                    String uid=current_user.getUid();
+                     databaseReference=FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+                    HashMap<String,String> userMap=new HashMap<>();
+                    userMap.put("name",name);
+                    userMap.put("status","Hi there! I'm using ItzChat");
+                    userMap.put("image","default");
+                    userMap.put("thumb_image","default");
+                    databaseReference.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                reg_progressdialog.dismiss();
+                                Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                                mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(mainIntent);
+                                finish();
+                            }
+                        }
+                    });
+
+
                 } else {
                     reg_progressdialog.hide();
                     Toast.makeText(RegisterActivity.this, "Can't Sign In.Please try again!", Toast.LENGTH_LONG).show();

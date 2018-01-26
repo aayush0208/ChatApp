@@ -21,7 +21,7 @@
 
 
     <Button
-        android:id="@+id/bneed_account"
+        android:id="@+id/bmake_account"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_below="@id/b_signin"
@@ -35,12 +35,14 @@
 
     <Button
         android:id="@+id/b_signin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/bneed_account"
-        android:layout_alignStart="@+id/bneed_account"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_alignLeft="@+id/bmake_account"
+        android:layout_alignStart="@+id/bmake_account"
         android:layout_below="@+id/textView"
         android:layout_marginTop="69dp"
+        android:background="@drawable/dark1"
+        android:textColor="#ffffff"
         android:onClick="doAction"
         android:text="@string/login_txt"
         android:textSize="18sp" />
