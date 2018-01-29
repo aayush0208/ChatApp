@@ -12,6 +12,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="status">change status</string>
     <string name="image">change Image</string>
-    <string name="status_bstatus">Save Changes</string>
 
 </resources>
